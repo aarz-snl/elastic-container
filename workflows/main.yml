@@ -1,0 +1,32 @@
+name: Test Elastic Container Setup
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  setup-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq git curl
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Prepare and Run Install
+        run: |
+	        chmod +x ./elastic-container.sh
+          ./elastic-container.sh start
+
+      - name: Validate Setup
+        run: |
+          # Implement validation logic here, for example:
+          curl -f http://localhost:9200
