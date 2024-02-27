@@ -12,27 +12,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      # Windows runners include Git and Curl. JQ might need to be installed if required by your scripts.
+
       - name: Install JQ (if needed)
         run: choco install jq
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Prepare and Run Install
+        shell: pwsh
+      
+      - name: Prepare and Run Install (Docker Compose)
         run: |
-          # Ensure line endings are correct for Windows
-          git config --global core.autocrlf true
-          .\elastic-container.sh start
+          bash ./elastic-container.sh start
         shell: bash
           
       - name: Validate Setup
         run: |
           docker ps
-        shell: cmd
+        shell: pwsh
 
       - name: Obtain Fleet Enrollment Token
         run: |
-          .\enrollment_token.sh
+          bash ./enrollment_token.sh
         shell: bash
