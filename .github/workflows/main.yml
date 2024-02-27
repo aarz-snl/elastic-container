@@ -33,6 +33,6 @@ jobs:
 
       - name: Obtain Fleet Enrollment Token
         run: |
-          chmod +x ./enrollment-token.sh
-          ./enrollment-token.sh
+          chmod +x ./enrollment_token.sh
+          ./enrollment_token.sh
 
