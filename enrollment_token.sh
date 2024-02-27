@@ -19,7 +19,7 @@ HEADERS=(
 CREATE_ENROLLMENT_TOKEN_ENDPOINT="${LOCAL_KBN_URL}/api/fleet/enrollment-api-keys"
 
 # Create an enrollment token (ensure you have the correct policy ID)
-POLICY_ID="YourPolicyIdHere"  # Update this with the actual policy ID
+POLICY_ID="Endpoint Policy"  # Update this with the actual policy ID
 
 # The data payload for creating an enrollment token
 DATA_PAYLOAD="{\"name\":\"EnrollmentTokenForScript\",\"policy_id\":\"${POLICY_ID}\"}"
