@@ -1,4 +1,4 @@
-name: Test Elastic Container Setup
+name: Test Elastic Container Setup on Windows
 
 on:
   push:
@@ -6,33 +6,33 @@ on:
       - main 
 
 jobs:
-  setup-and-test:
-    runs-on: ubuntu-latest
+  setup-and-test-windows:
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Install prerequisites
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq git curl
+      # Windows runners include Git and Curl. JQ might need to be installed if required by your scripts.
+      - name: Install JQ (if needed)
+        run: choco install jq
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Prepare and Run Install
         run: |
-          chmod +x ./elastic-container.sh
-          ./elastic-container.sh start
+          # Ensure line endings are correct for Windows
+          git config --global core.autocrlf true
+          .\elastic-container.sh start
+        shell: bash
           
       - name: Validate Setup
         run: |
-          # Implement validation logic here, for example:
-          sudo docker ps
+          docker ps
+        shell: cmd
 
       - name: Obtain Fleet Enrollment Token
         run: |
-          chmod +x ./enrollment_token.sh
-          ./enrollment_token.sh
-
+          .\enrollment_token.sh
+        shell: bash
