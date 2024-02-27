@@ -30,3 +30,9 @@ jobs:
         run: |
           # Implement validation logic here, for example:
           sudo docker ps
+
+      - name: Obtain Fleet Enrollment Token
+        run: |
+          chmod +x ./enrollment-token.sh
+          ./enrollment-token.sh
+
