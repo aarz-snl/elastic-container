@@ -18,14 +18,17 @@ HEADERS=(
 # Endpoint for creating an enrollment token for Fleet
 CREATE_ENROLLMENT_TOKEN_ENDPOINT="${LOCAL_KBN_URL}/api/fleet/enrollment-api-keys"
 
-# Create an enrollment token (replace YourPolicyIdHere with your actual policy ID)
-POLICY_ID="YourPolicyIdHere" # You need to replace this with your actual policy ID
+# Create an enrollment token (ensure you have the correct policy ID)
+POLICY_ID="YourPolicyIdHere"  # Update this with the actual policy ID
 
 # The data payload for creating an enrollment token
 DATA_PAYLOAD="{\"name\":\"EnrollmentTokenForScript\",\"policy_id\":\"${POLICY_ID}\"}"
 
 # Make the API call to create an enrollment token
 response=$(curl -k --silent --user "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}" -X POST "${CREATE_ENROLLMENT_TOKEN_ENDPOINT}" "${HEADERS[@]}" -d "${DATA_PAYLOAD}")
+
+# Debug: Print the full API response
+echo "API Response: $response"
 
 # Extract the enrollment token from the response
 token=$(echo $response | jq -r '.item.api_key')
